@@ -1,0 +1,21 @@
+{
+  "name": "ride_booking",
+  "version": "1.0.0",
+  "description": "ola uber rapido ",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc && node dist/client.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "circular-dependency": "madge --circular --ts-config ./tsconfig.json --extensions ts,tsx ."
+  },
+  "keywords": [
+    "ride",
+    "sharing",
+    "ola",
+    "uber",
+    "rapido",
+    "lld"
+  ],
+  "author": "sid",
+  "license": "MIT"
+}
