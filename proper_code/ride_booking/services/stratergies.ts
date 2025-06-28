@@ -10,7 +10,7 @@ class StratergyManager {
 
   public static getInstance = (): StratergyManager => this.instance ?? (this.instance = new StratergyManager());
 
-  public static getPricingStrategy = (): PricingStrategy => {
+  public getPricingStrategy = (): PricingStrategy => {
     const isWeatherRainy = true;
     if (isWeatherRainy) return TimeBasedPricingStrategy.getInstance();
     return LocationBasedPricingStrategy.getInstance();
