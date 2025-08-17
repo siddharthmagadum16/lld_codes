@@ -3,6 +3,8 @@ import PricingService from "./pricing";
 import RideService  from './ride'
 import UserService from './user';
 import NotificationService from "./notification";
+import { SMSNotificationChannel, EmailNotificationChannel, PushNotificationChannel } from "./notification-channels";
+import AnalyticsObserver from "./analytics-observer";
 import User from "../entities/User";
 import RideRequest from "../entities/RideRequest";
 import DriverService from "./driver";
@@ -17,6 +19,8 @@ class App {
   private rideService: RideService;
   private userService: UserService;
   private driverService: DriverService;
+  private notificationService: NotificationService;
+  private analyticsObserver: AnalyticsObserver;
 
 
   private constructor() {
@@ -24,6 +28,22 @@ class App {
     this.rideService = RideService.getInstance();
     this.userService = UserService.getInstance();
     this.driverService = DriverService.getInstance();
+    this.notificationService = NotificationService.getInstance();
+    this.analyticsObserver = new AnalyticsObserver();
+    
+    this.setupNotificationSystem();
+  }
+
+  private setupNotificationSystem() {
+    // Add different notification channels (Strategy Pattern)
+    this.notificationService.addChannel('sms', new SMSNotificationChannel());
+    this.notificationService.addChannel('email', new EmailNotificationChannel());
+    this.notificationService.addChannel('push', new PushNotificationChannel());
+    
+    // Subscribe observers for analytics (Observer Pattern)
+    this.notificationService.subscribe(this.analyticsObserver);
+    
+    console.log('🔧 Notification system initialized with multiple channels and observers');
   }
 
   public getUserService = () => this.userService;
@@ -52,6 +72,14 @@ class App {
   }
 
   public addUser = (name: string, phone: string) => this.userService.createUser(name, phone);
+
+  // Method to demonstrate multi-channel notifications
+  public sendEmergencyNotification = (recipient: string, message: string) => {
+    this.notificationService.notifyAllChannels(recipient, message);
+  }
+
+  // Method to get analytics data
+  public getAnalytics = () => this.analyticsObserver.getStats();
 
 }
 

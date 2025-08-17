@@ -6,10 +6,12 @@ import NotificationService from './notification';
 class UserService {
 
   private static users: User[];
-
   private static instance: UserService;
+  private notificationService: NotificationService;
+
   private constructor() {
     UserService.users = [];
+    this.notificationService = NotificationService.getInstance();
   }
   public static getInstance = (): UserService => this.instance ?? (this.instance = new UserService())
 
@@ -20,12 +22,11 @@ class UserService {
   }
 
   public notifyRideEnded = (ride: Ride) => {
-    NotificationService.notify(ride.getUser().getName(), 'Your ride has ended. Kindly pay ' + ride.getPrice() + 'INR')
+    this.notificationService.notifyRideEnded(ride.getUser().getName(), ride.getPrice());
   }
 
   public notifyRideStarted = (ride: Ride) => {
-    NotificationService.notify(ride.getUser().getName(), 'Your ride has started. Driver\s name is ' + ride.getDriver().getName())
-
+    this.notificationService.notifyRideStarted(ride.getUser().getName(), ride.getDriver().getName());
   }
 }
 

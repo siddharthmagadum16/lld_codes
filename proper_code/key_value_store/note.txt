@@ -1,0 +1,8 @@
+Functional requirements
+1. The system should able to set a value for given key
+2. The system should able to get value for given key
+3. The system should able to delete a key
+
+Non-functional requirements
+Each of the operations should be taking constant time.
+At any given point of time, each client should be able to see same value for a given key if it exists.

@@ -9,9 +9,11 @@ class DriverService {
 
   private static drivers: Driver[];
   private static instance: DriverService;
+  private notificationService: NotificationService;
 
   private constructor() {
     DriverService.drivers = [];
+    this.notificationService = NotificationService.getInstance();
   }
   public static getInstance = (): DriverService => this.instance ?? (this.instance = new DriverService())
 
@@ -32,7 +34,9 @@ class DriverService {
   }
 
   public notifyNewRideRequest = (nearestDrivers: Driver[], rideRequest: RideRequest) => {
-    nearestDrivers.forEach((driver: Driver) => NotificationService.notify(driver.getName(), `New Ride Request from ${rideRequest.getUser().getName()}`));
+    nearestDrivers.forEach((driver: Driver) => 
+      this.notificationService.notifyRideRequested(driver.getName(), rideRequest.getUser().getName())
+    );
   }
 
   public notifyRideRequestForNearestDrivers = (rideRequest: RideRequest) => {
@@ -49,7 +53,7 @@ class DriverService {
       return true;
       // return RideService.getInstance().assignDriverForRide(rideRquest, driver);
     }
-    NotificationService.notify(driver.getName(), `This ride request is already fulfilled by other driver`);
+    this.notificationService.notifyRideRequestFulfilled(driver.getName());
     return false;
   }
 
