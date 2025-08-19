@@ -33,7 +33,7 @@ try {
 }
 
 
-/* ------ Not Following Principle ------ */
+/* ------ Following Principle ------ */
 
 // Base class, representing all birds
 class Bird2 {
