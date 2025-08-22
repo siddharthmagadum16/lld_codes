@@ -1,0 +1,31 @@
+{
+  "name": "delivery-cost-tracking-system",
+  "version": "1.0.0",
+  "description": "A comprehensive delivery cost tracking system built with TypeScript, following SOLID principles and modern design patterns",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/client.js",
+    "test": "node dist/test_core.js",
+    "dev": "tsx client.ts",
+    "clean": "rm -rf dist",
+    "rebuild": "npm run clean && npm run build"
+  },
+  "keywords": [
+    "delivery",
+    "cost-tracking",
+    "typescript",
+    "solid-principles",
+    "design-patterns",
+    "low-level-design",
+    "interview-question"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

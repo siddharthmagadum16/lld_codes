@@ -1,13 +1,19 @@
+// use htis mutex for locks in interview, its easy and simple. make this class singleton.
+// Create multiple lock fields such as driverLock, requestObjLock to lock different resources.
+
 class Mutex {
   private lock = Promise.resolve();
 
   async acquire() {
-    let release!: () => void;
-    const nextLock = new Promise<void>((resolve) => (release = resolve));
-    const previousLock = this.lock;
-    this.lock = nextLock;
-    await previousLock;
-    return release;
+    // Wait for the current lock to be released
+    await this.lock;
+    // Create a new lock and return its release function
+    let release: () => void;
+    this.lock = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    
+    return release!;
   }
 }
 
