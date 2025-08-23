@@ -5,7 +5,7 @@ import EmployeeService from "./services/EmployeeService";
 import ResourceService from "./services/ResourceService";
 
 
-const demo = () => {
+const demo = async () => {
 
   const EmployeeServiceInst: IEmployeeService = EmployeeService.getInstance();
   const ResourceServiceInst: IResourceService = ResourceService.getInstance();
@@ -26,11 +26,16 @@ const demo = () => {
     new Employee('e4', 'employee4'),
   ]);
 
-  ResourceServiceInst.grantResourceAccess('e1', 'r1');
-  ResourceServiceInst.grantResourceAccess('e1', 'r2');
-  ResourceServiceInst.grantResourceAccess('e2', 'r2');
+  await Promise.all([
+    ResourceServiceInst.grantResourceAccess('e1', 'r1'),
+    ResourceServiceInst.grantResourceAccess('e1', 'r2'),
+    ResourceServiceInst.grantResourceAccess('e1', 'r3'),
+    ResourceServiceInst.grantResourceAccess('e2', 'r2'),
+  ]);
 
   ResourceServiceInst.getResource('e1', 'r1');
+  ResourceServiceInst.getResource('e1', 'r2');
+  ResourceServiceInst.getResource('e1', 'r3');
 
   ResourceServiceInst.getResource('e2', 'r2');
   ResourceServiceInst.revokeResourceAccess('e2', 'r2');

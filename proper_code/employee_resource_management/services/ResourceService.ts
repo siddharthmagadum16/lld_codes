@@ -1,11 +1,12 @@
 import Employee from "../entities/Employee";
 import Resource from "../entities/Resource";
 import { IEmployeeService, IResourceService } from "../interfaces";
-
+import Mutex from "./Mutex";
 
 class ResourceService implements IResourceService {
 
   private static instance: IResourceService;
+  private accessLock = new Mutex();
 
   private access: Map<string, Set<string>> = new Map();
   private resources: Map<string,Resource> = new Map();
@@ -20,19 +21,32 @@ class ResourceService implements IResourceService {
     this.employeeServiceInst = employeeServiceInstance;
   }
 
+  private getAccessOfEmployee = async (employeeId: string): Promise<Set<string>|undefined> => {
+    return await new Promise(resolve => setTimeout(() => resolve(this.access.get(employeeId)), 1000));
+  }
+  private setAccessOfEmployee = async (employeeId: string, accesses: Set<string>): Promise<Map<string, Set<string>>>  => {
+    return await new Promise(resolve => setTimeout(() => resolve(this.access.set(employeeId, accesses)), 1000));
+  }
 
-  public grantResourceAccess = (employeeId: string, resourceId: string): void => {
+  public grantResourceAccess = async (employeeId: string, resourceId: string): Promise<void> => {
     if (!this.employeeServiceInst!.isValidEmployee(employeeId)) {
       console.error('Cant provide access. Not a valid employee');
+      return;
     }
 
-    const existingAccess = this.access.get(employeeId);
-    if (existingAccess) {
-      existingAccess.add(resourceId);
+    const releaseAccessLock = await this.accessLock.acquire();
+    try {
+      const existingAccess = await this.getAccessOfEmployee(employeeId);
+      let newAccess: Set<string>;
+      newAccess = existingAccess ? new Set([...existingAccess!, resourceId]) : new Set([resourceId]);
+      await this.setAccessOfEmployee(employeeId, newAccess);
+
+      console.log(`Employee: ${employeeId} was granted resource: ${resourceId} | Employee's resources: [${[...this.access.get(employeeId)!]}]`);
+    } finally {
+      releaseAccessLock();
     }
-    else  this.access.set(employeeId, new Set([resourceId]));
-    console.log('Employee', employeeId, 'was granted resource with resourceId: ', resourceId);
   }
+
   public revokeResourceAccess = (employeeId: string, resourceId: string): void => {
     const grantedResources = this.access.get(employeeId);
     if (grantedResources?.has(resourceId)) {
