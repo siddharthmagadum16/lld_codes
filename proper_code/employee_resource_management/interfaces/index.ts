@@ -12,6 +12,7 @@ interface IResourceService {
   revokeResourceAccess(employeeId: string, resourceId: string): void;
   getResource(employeeId: string, resourceId: string): Resource | null;
   addResources(resources: Resource[]): void;
+  setEmployeeInstance(instance: IEmployeeService): void;
 }
 
 

@@ -9,20 +9,20 @@ class ResourceService implements IResourceService {
 
   private access: Map<string, Set<string>> = new Map();
   private resources: Map<string,Resource> = new Map();
-  private static employeeServiceInst: IEmployeeService | undefined;
+  private employeeServiceInst: IEmployeeService | undefined;
   private constructor () {}
 
   static getInstance = (): IResourceService => {
     return ResourceService.instance ? ResourceService.instance : ResourceService.instance = new ResourceService();
   }
 
-  public static setEmployeeInstance = (employeeServiceInstance: IEmployeeService) => {
-    ResourceService.employeeServiceInst = employeeServiceInstance;
+  public setEmployeeInstance = (employeeServiceInstance: IEmployeeService) => {
+    this.employeeServiceInst = employeeServiceInstance;
   }
 
 
   public grantResourceAccess = (employeeId: string, resourceId: string): void => {
-    if (!ResourceService.employeeServiceInst!.isValidEmployee(employeeId)) {
+    if (!this.employeeServiceInst!.isValidEmployee(employeeId)) {
       console.error('Cant provide access. Not a valid employee');
     }
 

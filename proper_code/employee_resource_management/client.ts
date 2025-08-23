@@ -8,8 +8,8 @@ import ResourceService from "./services/ResourceService";
 const demo = () => {
 
   const EmployeeServiceInst: IEmployeeService = EmployeeService.getInstance();
-  ResourceService.setEmployeeInstance(EmployeeServiceInst);
   const ResourceServiceInst: IResourceService = ResourceService.getInstance();
+  ResourceServiceInst.setEmployeeInstance(EmployeeServiceInst);
   
 
   ResourceServiceInst.addResources([
