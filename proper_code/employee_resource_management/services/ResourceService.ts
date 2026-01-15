@@ -1,6 +1,6 @@
 import Employee from "../entities/Employee";
 import Resource from "../entities/Resource";
-import { IEmployeeService, IResourceService } from "../interfaces";
+import { IEmployeeService, IResourceService } from "../interfaces/index";
 import Mutex from "./Mutex";
 
 class ResourceService implements IResourceService {

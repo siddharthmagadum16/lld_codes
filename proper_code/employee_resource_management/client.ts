@@ -1,6 +1,6 @@
 import Employee from "./entities/Employee";
 import Resource from "./entities/Resource";
-import { IEmployeeService, IResourceService } from "./interfaces";
+import { IEmployeeService, IResourceService } from "./interfaces/index";
 import EmployeeService from "./services/EmployeeService";
 import ResourceService from "./services/ResourceService";
 
@@ -10,7 +10,7 @@ const demo = async () => {
   const EmployeeServiceInst: IEmployeeService = EmployeeService.getInstance();
   const ResourceServiceInst: IResourceService = ResourceService.getInstance();
   ResourceServiceInst.setEmployeeInstance(EmployeeServiceInst);
-  
+
 
   ResourceServiceInst.addResources([
     new Resource('r1', 'r1data'),
@@ -43,7 +43,7 @@ const demo = async () => {
 
   ResourceServiceInst.getResource('e3', 'r4');
   ResourceServiceInst.getResource('e4', 'r4');
-  
+
 }
 
 demo();

@@ -69,7 +69,7 @@ class Sort<T> {
         return this.strategy.algo(arr);
     }
 
-    setStrategy(strategy: ISortStrategy<T>): void {
+    setStrategy(strategy: ISortStrategy<T>): void { // used to change strategy dynamically, based on user input, otherwise, by default strategy should be passed via constructor.
         this.strategy = strategy;
     }
 }

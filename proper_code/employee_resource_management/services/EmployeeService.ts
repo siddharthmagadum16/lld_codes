@@ -1,17 +1,17 @@
 import Employee from "../entities/Employee";
-import { IEmployeeService } from "../interfaces";
+import { IEmployeeService } from "../interfaces/index";
 
 
 class EmployeeService implements IEmployeeService {
 
   private static instance: IEmployeeService;
-  private employees: Map<string,Employee> = new Map();
-  private constructor () {}
+  private employees: Map<string, Employee> = new Map();
+  private constructor() { }
 
   static getInstance = (): IEmployeeService => {
     return EmployeeService.instance ? EmployeeService.instance : EmployeeService.instance = new EmployeeService();
   }
-  
+
   public isValidEmployee = (employeeId: string): boolean => this.employees.has(employeeId);
 
   addEmployees = (employees: Employee[]): void => {

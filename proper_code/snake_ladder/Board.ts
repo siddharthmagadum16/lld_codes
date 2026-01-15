@@ -66,3 +66,14 @@ class Board {
 }
 
 export default Board;
+
+/*
+This implementation has a flow on how game ends.
+The game should not end when only one player reaches 100 position.
+Instead it should end when all players except one have reached 100 position.
+Changes needed:
+In the else block, remove the declareWinner part, and replace with deactivating the player so that his next turn is skipped.
+
+Put game over condition in the end of the while loop, with logic mentioned above.
+
+*/

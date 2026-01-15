@@ -166,13 +166,13 @@ console.log("\n--- Nested transaction test ---");
 kvStore.beginTransaction(userContext); // Outer transaction
 kvStore.put(userContext, "name", "Bob");
 console.log("Outer transaction: name is " + kvStore.get(userContext, "name"));
-kvStore.beginTransaction(userContext); // Nested transaction
-kvStore.put(userContext, "city", "San Francisco");
-kvStore.put(userContext, "name", "Charlie"); // Overrides 'Bob'
-console.log("Inner transaction: name is " + kvStore.get(userContext, "name"));
-kvStore.delete(userContext, "age");
-console.log("Inner transaction: age is " + kvStore.get(userContext, "age"));
-kvStore.commit(userContext); // Commit nested transaction
+    kvStore.beginTransaction(userContext); // Nested transaction
+    kvStore.put(userContext, "city", "San Francisco");
+    kvStore.put(userContext, "name", "Charlie"); // Overrides 'Bob'
+    console.log("Inner transaction: name is " + kvStore.get(userContext, "name"));
+    kvStore.delete(userContext, "age");
+    console.log("Inner transaction: age is " + kvStore.get(userContext, "age"));
+    kvStore.commit(userContext); // Commit nested transaction
 console.log("After inner commit (in outer trans.): name is " + kvStore.get(userContext, "name"));
 console.log("After inner commit (in outer trans.): age is " + kvStore.get(userContext, "age"));
 kvStore.rollback(userContext); // Rollback outer transaction

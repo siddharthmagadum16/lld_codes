@@ -9,7 +9,7 @@ checkout this YT short too - https://youtube.com/shorts/K1HHbKJvcv8?si=3S2rBVvjb
 
 to extend this further as a followup, there can be push or pull type of Subject(observerable)
 
-Here Group class is Subject (observable), and User is observer
+Here Group class is Subject (observable), and Person is observer
 */
 
 // Observer interface
@@ -19,7 +19,7 @@ interface ISubscriber {
 }
 
 // Concrete Observer
-class User implements ISubscriber {
+class Person implements ISubscriber {
     private name: string;
 
     constructor(name: string) {
@@ -63,9 +63,9 @@ function main(): void {
     const group = new Group();
 
     // Create users
-    const user1 = new User("sid");
-    const user2 = new User("mom");
-    const user3 = new User("sonu");
+    const user1 = new Person("sid");
+    const user2 = new Person("mom");
+    const user3 = new Person("sonu");
 
     // Subscribe users to group
     group.addSubscriber(user1);
