@@ -3,5 +3,6 @@
     "@types/node": "^24.0.7",
     "typescript": "^5.9.3"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "type": "module"
 }
