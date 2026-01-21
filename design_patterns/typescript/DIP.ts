@@ -100,7 +100,7 @@ class RazorPay implements IService {
 }
 
 // Main function demonstrating DIP
-function main(): void {
+function mainDip(): void {
     // Create users
     const user1 = new User("1", "Alice", "ACC001", "stripe");
     const user2 = new User("2", "Bob", "ACC002", "paypal");
@@ -120,4 +120,4 @@ function main(): void {
 }
 
 // Execute main
-main();
+mainDip();

@@ -17,9 +17,13 @@ interface ISubscriber {
     notify(message: string): void;
     getName(): string;
 }
+interface Person {
+    getName(): string;
+}
 
+//Key principle: TypeScript only cares if the object has at least what's required by the interface. Extra properties/methods are fine
 // Concrete Observer
-class Person implements ISubscriber {
+class Employee implements Person, ISubscriber {
     private name: string;
 
     constructor(name: string) {
@@ -63,9 +67,9 @@ function main(): void {
     const group = new Group();
 
     // Create users
-    const user1 = new Person("sid");
-    const user2 = new Person("mom");
-    const user3 = new Person("sonu");
+    const user1 = new Employee("sid");
+    const user2 = new Employee("mom");
+    const user3 = new Employee("sonu");
 
     // Subscribe users to group
     group.addSubscriber(user1);

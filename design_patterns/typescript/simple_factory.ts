@@ -19,16 +19,28 @@ class Square implements Shape {
 
 // ShapeFactory class to create shapes
 class ShapeFactory {
-    // Factory method to create shapes
+    // Registry of shape types and their constructors
+    private static readonly shapeMap = new Map<string, new () => Shape>();
+
+    /**
+     * Register a new shape type (allows extension without modification - OCP compliant)
+     */
+    static register(shapeType: string, shapeClass: new () => Shape): void {
+        this.shapeMap.set(shapeType, shapeClass);
+    }
+
+    /**
+     * Factory method to create shapes using a Map registry.
+     */
     static createShape(shapeType: string): Shape | null {
-        if (shapeType === "Circle") {
-            return new Circle();
-        } else if (shapeType === "Square") {
-            return new Square();
-        }
-        return null; // Return null if shape type is unknown
+        const ShapeClass = this.shapeMap.get(shapeType);
+        return ShapeClass ? new ShapeClass() : null;
     }
 }
+
+// Register shapes (can be done from anywhere without modifying ShapeFactory)
+ShapeFactory.register("Circle", Circle);
+ShapeFactory.register("Square", Square);
 
 // Main function
 function main(): void {

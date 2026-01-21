@@ -25,7 +25,7 @@ class DriverService {
     return this.enqueue(() => this.myMap.get(key));
   }
 
-  public setInMap(key: string, value: Map<string, Array<string>>): Promise<void> {
+  public setInMap(key: string, value: Map<string, Array<string>>): Promise<any> {
     return this.enqueue(() => this.myMap.set(key, value));
   }
 
