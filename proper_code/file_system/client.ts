@@ -1,6 +1,11 @@
 import { FileType } from "./interfaces/index";
 import { FileSystemService } from "./services/file_system";
-/* Note: this is implemented by myself */
+/* Note: this is implemented by myself
+To do much better, Composite design pattern can be used here
+refer : https://refactoring.guru/design-patterns/composite
+https://codewitharyan.com/tech-blogs/design-file-system
+
+*/
 
 const fileManager = FileSystemService.getInstance();
 

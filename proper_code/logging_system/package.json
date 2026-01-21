@@ -1,0 +1,21 @@
+{
+  "name": "logging-system",
+  "version": "1.0.0",
+  "description": "A pluggable, extensible logging library",
+  "main": "dist/index.js",
+  "type": "commonjs",
+  "scripts": {
+    "build": "tsc",
+    "start": "tsc && node dist/client.js",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "logging",
+    "logger",
+    "typescript",
+    "lld"
+  ],
+  "author": "",
+  "license": "MIT"
+}
+
