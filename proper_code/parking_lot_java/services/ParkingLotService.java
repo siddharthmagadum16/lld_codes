@@ -45,39 +45,31 @@ public class ParkingLotService {
 
     /**
      * Attempts to assign a parking spot to a vehicle with proper concurrency handling.
-     * Uses optimistic locking with retry mechanism to handle race conditions.
+     * Iterates through candidate spots and tries each one atomically until success.
+     * No retry mechanism needed - if a spot is taken, naturally moves to the next candidate.
      * 
      * @param vehicle The vehicle to park
      * @param gate The entry gate
      * @return The assigned spot, or null if no spot available
      */
     private Spot assignParking(Vehicle vehicle, Gate gate) {
-        int maxRetries = 3;
+        // Get iterator of candidate spots in priority order
+        java.util.Iterator<Spot> candidateSpots = parkingStrategyService.getCandidateSpots(vehicle, gate, floors);
         
-        for (int attempt = 0; attempt < maxRetries; attempt++) {
-            // Get a candidate spot using the parking strategy
-            Spot candidateSpot = parkingStrategyService.getParkingSpot(vehicle, gate, floors);
+        // Try each candidate spot atomically
+        while (candidateSpots.hasNext()) {
+            Spot candidateSpot = candidateSpots.next();
             
-            if (candidateSpot == null) {
-                return null; // No spots available
-            }
-            
-            // Try to atomically park at the spot
-            // This handles the race condition where two threads might get the same spot
+            // Try to atomically acquire and park at this spot
+            // If successful, we're done. If not, loop continues to next candidate.
             if (candidateSpot.tryParkVehicle(vehicle.getVehicleId())) {
                 return candidateSpot;
             }
             
-            // If we failed, the spot was taken by another thread, retry
-            System.out.println("Spot " + candidateSpot.getSpotId() + " was taken, retrying...");
+            // Spot was occupied by another thread, automatically try next candidate
         }
         
-        // All retries exhausted, try one more time to find any available spot
-        Spot finalAttemptSpot = parkingStrategyService.getParkingSpot(vehicle, gate, floors);
-        if (finalAttemptSpot != null && finalAttemptSpot.tryParkVehicle(vehicle.getVehicleId())) {
-            return finalAttemptSpot;
-        }
-        
+        // No suitable spots available
         return null;
     }
 

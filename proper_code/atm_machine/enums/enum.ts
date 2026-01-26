@@ -1,0 +1,20 @@
+
+
+enum Denomination {
+  ONE_HUNDRED = 100,
+  FIVE_HUNDRED = 500,
+  TWO_THOUSAND = 2000,
+}
+
+enum MachineState {
+  READY = 'READY',
+  CARD_INSERTED = 'CARD_INSERTED',
+  ENTER_AMOUNT_TO_WITHDRAW = 'ENTER_AMOUNT_TO_WITHDRAW',
+  ENTER_ATM_PIN = 'ENTER_ATM_PIN',
+  DISPATCH_CASH = 'DISPATCH_CASH',
+  GENERATE_RECEIPT = 'GENERATE_RECEIPT',
+}
+//4 STATES PENDING non happy flow
+
+
+export { Denomination, MachineState }

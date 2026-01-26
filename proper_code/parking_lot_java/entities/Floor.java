@@ -1,16 +1,17 @@
 package entities;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Represents a floor in the parking lot.
- * Uses ConcurrentHashMap for thread-safe spot management.
+ * The spots map is immutable after construction, so most read operations don't need synchronization.
+ * Only getAvailableSpots() is synchronized as it iterates and checks mutable spot states.
  */
 public class Floor {
-    private final Map<String, Spot> spots = new ConcurrentHashMap<>();
+    private final Map<String, Spot> spots = new HashMap<>();
 
     public Floor(List<Spot> spotList) {
         for (Spot spot : spotList) {
@@ -20,11 +21,11 @@ public class Floor {
 
     /**
      * Gets all available (unoccupied) spots on this floor.
-     * Thread-safe iteration over ConcurrentHashMap.
+     * Synchronized to ensure consistent snapshot of available spots across the iteration.
      * 
      * @return List of available spots
      */
-    public List<Spot> getAvailableSpots() {
+    public synchronized List<Spot> getAvailableSpots() {
         List<Spot> availableSpots = new ArrayList<>();
         for (Spot spot : spots.values()) {
             if (!spot.isOccupied()) {
@@ -34,18 +35,23 @@ public class Floor {
         return availableSpots;
     }
 
-    public Map<String, Spot> getSpots() {
-        return spots;
-    }
-
+    /**
+     * Simple read from immutable map - no synchronization needed.
+     */
     public Spot getSpot(String spotId) {
         return spots.get(spotId);
     }
 
+    /**
+     * Simple read from immutable map - no synchronization needed.
+     */
     public boolean hasSpot(String spotId) {
         return spots.containsKey(spotId);
     }
 
+    /**
+     * Simple read from immutable map - no synchronization needed.
+     */
     public int getTotalSpots() {
         return spots.size();
     }
