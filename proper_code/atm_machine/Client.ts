@@ -17,3 +17,12 @@ atmMachineServiceInst.submitAtmPin(9832);
 
 
 // atmMachineServiceInst.insertCard(card1);
+type SpotType = 'SMALL' | 'MEDIUM' | 'LARGE';
+type VehicleType2 = 'CAR' | 'TRUCK' | 'BIKE';
+
+const Mapping: Record<SpotType, VehicleType2[]> = {
+    SMALL: ['BIKE'],
+    MEDIUM: ['CAR', 'BIKE'],
+    LARGE: ['TRUCK', 'CAR']
+};
+// Mapping[SpotType.SMALL] = ['BIKE'];

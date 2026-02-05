@@ -16,13 +16,6 @@ public class Spot {
         this.spotType = spotType;
     }
 
-    /**
-     * Attempts to park a vehicle at this spot.
-     * Thread-safe: Uses synchronized to ensure atomic check-and-park operation.
-     * 
-     * @param vehicleId The ID of the vehicle to park
-     * @return true if parking was successful, false if spot was already occupied
-     */
     public synchronized boolean tryParkVehicle(String vehicleId) {
         if (this.vehicleId != null) {
             return false; // Spot already occupied

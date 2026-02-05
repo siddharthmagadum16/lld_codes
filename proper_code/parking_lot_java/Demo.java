@@ -17,7 +17,7 @@ public class Demo {
             for (int i = 0; i < 3; ++ i) {
                 executor.submit(() -> func(num));
             }
-        }
+        } 
         System.out.println("num m " + num);
     }
 }
