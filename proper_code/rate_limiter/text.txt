@@ -1,0 +1,27 @@
+
+deviceId
+ip
+userId
+
+requirements
+1. request should be rated limited for each API.
+2. rate limiting should be on either of deviceId, ip, userId
+3. API response should be { isRateLimited: boolean }
+4. Extensible to different type of rate limiting.
+Entities
+
+User
+- userId
+- ip
+- deviceId
+
+RateLimiter
+  config
+  -fetch(user, api)
+
+
+TokenBucketStratergy
+  Map<userId, 
+
+
+code structure, principles, dp

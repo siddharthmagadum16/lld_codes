@@ -293,4 +293,4 @@ async function main(): Promise<void> {
 }
 
 // Execute main
-main().catch(console.error);
+main() //.catch(console.error);
